@@ -1,7 +1,7 @@
 defmodule Example2Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :example_2
 
-  socket "/socket", Example2Web.UserSocket,
+  socket "/feed_socket", Example2Web.FeedSocket,
     websocket: true,
     longpoll: false
 
