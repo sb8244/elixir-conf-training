@@ -1,1 +1,19 @@
-<h1>Activities</h1>
+<div id="activity-container">
+  <div class="activity-wrapper">
+    <span class="activity-wrapper__main">Steve edited a person</span>
+    <span class="activity-wrapper__time">08/24 5:36:09 PM</span>
+    <span class="activity-wrapper__tier activity-wrapper__tier--A">A</span>
+  </div>
+
+  <div class="activity-wrapper">
+    <span class="activity-wrapper__main">Steve edited a person's information</span>
+    <span class="activity-wrapper__time">08/24 5:36:07 PM</span>
+    <span class="activity-wrapper__tier activity-wrapper__tier--B">B</span>
+  </div>
+
+  <div class="activity-wrapper">
+    <span class="activity-wrapper__main">Steve Bussey edited a person</span>
+    <span class="activity-wrapper__time">08/24 5:36:06 PM</span>
+    <span class="activity-wrapper__tier activity-wrapper__tier--C">C</span>
+  </div>
+</div>
