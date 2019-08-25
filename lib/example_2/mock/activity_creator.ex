@@ -3,7 +3,7 @@ defmodule Example2.Mock.ActivityCreator do
 
   def create_many_activities(count \\ 50, delay \\ 500) do
     Task.async(fn ->
-      Enum.each(1..count, fn _ ->
+      Enum.each((1..count), fn _ ->
         create_random_activity()
         Process.sleep(delay)
       end)

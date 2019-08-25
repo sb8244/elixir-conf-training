@@ -6,10 +6,14 @@ defmodule Example2.Application do
   use Application
 
   def start(_type, _args) do
+    # List all child processes to be supervised
     children = [
+      # Start the Ecto repository
       Example2.Repo,
-      Example2Web.Endpoint,
-      Example2.RateLimit.Server
+      # Start the endpoint when the application starts
+      Example2Web.Endpoint
+      # Starts a worker by calling: Example2.Worker.start_link(arg)
+      # {Example2.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
