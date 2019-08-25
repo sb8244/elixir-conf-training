@@ -12,7 +12,7 @@ defmodule Example2Web.FeedChannel do
 
     # TODO: This is not replying to the fetch command correctly, causing a crash. Return a successful
     # response so that the client is responded to with the payload above.
-    {:reply, {:ok, payload}, socket}
+    nil
   end
 
   # TODO: The function for create_activity is purposefully left out. Try implementing it to these specs:
@@ -23,18 +23,9 @@ defmodule Example2Web.FeedChannel do
   #     :error status instead of :ok
   #   * Fix the error that will come up after you do this (due to missing occurred_at). Do this completely
   #     in the Channel by add a valid DateTime to the params map.
-  def handle_in("create_activity", params, socket) do
-    params
-    |> Map.put("occurred_at", DateTime.utc_now())
-    |> Activity.create()
-    |> case do
-      {:ok, activity} ->
-        {:reply, {:ok, activity}, socket}
 
-      {:error, err} ->
-        {:reply, {:error, %{err: "invalid activity data"}}, socket}
-    end
-  end
+  # def handle_in("create_activity", params, socket) do
+  # end
 
   defp all_activities(params) do
     Activity.all(params)
