@@ -128,3 +128,6 @@ system, rather than filling in a function or 2.
 
 The goal of this task is to issue a frontend creation, refresh, and then issue another one. The second creation
 should be rate limited still, until 5s passes.
+
+Try building the rate limiter for a single user first (like we have now), but then build in the idea of having
+multiple connected users with their own rate limits.
