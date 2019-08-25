@@ -19,3 +19,11 @@ defmodule Example2.Activity.Activity do
     |> validate_required([:who_id, :what, :what_type, :occurred_at, :customer_tier])
   end
 end
+
+require Protocol
+
+Protocol.derive(
+  Jason.Encoder,
+  Example2.Activity.Activity,
+  only: Example2.Activity.Activity.__schema__(:fields)
+)
