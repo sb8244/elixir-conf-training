@@ -1,7 +1,7 @@
 import socket from "./socket"
 
 export function getFeed() {
-  const feedChannel = socket.channel("feed:me")
+  const feedChannel = socket.channel("feed")
 
   return {
     channel: feedChannel
@@ -23,5 +23,11 @@ export function fetchFeed({ channel }) {
       .receive("ok", resolve)
       .receive("error", reject)
       .receive("timeout", reject)
+  })
+}
+
+export function onNewActivity({ channel }, callback) {
+  channel.on('activity.created', (activity) => {
+    callback(activity)
   })
 }
