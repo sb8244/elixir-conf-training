@@ -1,8 +1,14 @@
 import css from "../css/app.css"
-import socket from "./socket"
+import { getFeed, startFeed, fetchFeed } from './feed'
 
-const feedChannel = socket.channel("feed:me")
+const feed = getFeed()
 
-feedChannel.join()
-  .receive("ok", resp => { console.log("Joined feed", resp) })
-  .receive("error", resp => { console.log("Unable to join feed", resp) })
+startFeed(feed).then(() => {
+  fetchFeed(feed).then((activities) => {
+    console.log(activities)
+  }).catch((err) => {
+    console.error('fetchFeed error', err)
+  })
+}).catch((err) => {
+  console.error('startFeed error', err)
+})

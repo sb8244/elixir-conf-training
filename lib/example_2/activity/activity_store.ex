@@ -7,4 +7,9 @@ defmodule Example2.Activity.ActivityStore do
     |> Activity.changeset(params)
     |> Repo.insert()
   end
+
+  def all(params) do
+    Activity
+    |> Repo.all()
+  end
 end
