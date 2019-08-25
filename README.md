@@ -74,3 +74,9 @@ located in the `FeedChannel` module.
 
 When it works, you should be able to run `createFakeActivity()` and it will both create and push the activity
 down to your page.
+
+### 6. (hard mode) Asynchronously create the Activity, so that the socket remains available
+
+When the Socket is creating an activity, it is unavailable to process other requests. Utilize a `socket_ref` in
+order to asynchronously process the Activity. You can do this all in the same file as the Channel, you don't need
+to make a new GenServer (ask for hints if you're not sure how you'd go about this).
