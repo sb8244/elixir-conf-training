@@ -1,6 +1,15 @@
 defmodule Example2.Mock.ActivityCreator do
   alias Example2.Activity
 
+  def create_many_activities(count \\ 50, delay \\ 500) do
+    Task.async(fn ->
+      Enum.each((1..count), fn _ ->
+        create_random_activity()
+        Process.sleep(delay)
+      end)
+    end)
+  end
+
   def create_random_activity() do
     verb = random_verb()
 
