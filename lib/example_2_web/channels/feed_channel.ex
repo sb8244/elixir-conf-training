@@ -24,19 +24,29 @@ defmodule Example2Web.FeedChannel do
   #   * Fix the error that will come up after you do this (due to missing occurred_at). Do this completely
   #     in the Channel by add a valid DateTime to the params map.
   def handle_in("create_activity", params, socket) do
-    params
-    |> Map.put("occurred_at", DateTime.utc_now())
-    |> Activity.create()
-    |> case do
-      {:ok, activity} ->
-        {:reply, {:ok, activity}, socket}
+    async_create_activity(params, socket_ref(socket))
 
-      {:error, _err} ->
-        {:reply, {:error, %{err: "invalid activity data"}}, socket}
-    end
+    {:noreply, socket}
   end
 
   defp all_activities(params) do
     Activity.all(params)
+  end
+
+  defp async_create_activity(params, ref) do
+    Task.start_link(fn ->
+      Process.sleep(1_000)
+
+      params
+      |> Map.put("occurred_at", DateTime.utc_now())
+      |> Activity.create()
+      |> case do
+        {:ok, activity} ->
+          reply(ref, {:ok, activity})
+
+        {:error, _err} ->
+          reply(ref, {:error, %{err: "invalid activity data"}})
+      end
+    end)
   end
 end
