@@ -1,4 +1,6 @@
 defmodule Example2.Activity.ActivityStore do
+  import Ecto.Query
+
   alias Example2.Repo
   alias Example2.Activity.Activity
 
@@ -9,7 +11,13 @@ defmodule Example2.Activity.ActivityStore do
   end
 
   def all(params) do
-    Activity
+    limit = Map.get(params, "limit", nil)
+
+    (
+      from a in Activity,
+      limit: ^limit,
+      order_by: [desc: a.occurred_at]
+    )
     |> Repo.all()
   end
 end

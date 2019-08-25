@@ -6,7 +6,7 @@ const feed = getFeed()
 
 startFeed(feed).then(() => {
   fetchFeed(feed).then(({ activities }) => {
-    activities.forEach(addActivityToTop)
+    activities.reverse().forEach(addActivityToTop)
   }).catch((err) => {
     console.error('fetchFeed error', err)
   })

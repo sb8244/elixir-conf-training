@@ -9,7 +9,7 @@ defmodule Example2Web.FeedChannel do
     {:reply, {:ok, %{activities: all_activities(params)}}, socket}
   end
 
-  defp all_activities(_params) do
-    Example2.Activity.all(%{})
+  defp all_activities(params) do
+    Example2.Activity.all(params)
   end
 end

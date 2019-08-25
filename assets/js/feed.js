@@ -19,7 +19,7 @@ export function startFeed({ channel }) {
 
 export function fetchFeed({ channel }) {
   return new Promise((resolve, reject) => {
-    channel.push("fetch", { page: 1, per_page: 50 })
+    channel.push("fetch", { limit: 10 })
       .receive("ok", resolve)
       .receive("error", reject)
       .receive("timeout", reject)
