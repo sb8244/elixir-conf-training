@@ -34,7 +34,7 @@ defmodule Example2Web.FeedChannel do
   # TODO (2b): You will see an error in your GenServer once you start sending yourself a message. Implement a
   # handle_info here in order to remove the rate limiting from the socket.
   def handle_info(:remove_rate_limit, socket) do
-    {:noreply, assign(socket, :rate_limited?, false) }
+    {:noreply, assign(socket, :rate_limited?, false)}
   end
 
   defp all_activities(params) do

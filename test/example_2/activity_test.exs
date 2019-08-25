@@ -21,6 +21,7 @@ defmodule Example2.ActivityTest do
     test "a valid Activity can be created" do
       assert {:ok, activity} = Activity.create(@valid_params)
       assert activity.id
+
       Enum.each(@valid_params, fn {k, v} ->
         assert Map.get(activity, k) == v
       end)

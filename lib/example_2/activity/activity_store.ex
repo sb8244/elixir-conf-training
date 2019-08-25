@@ -13,8 +13,7 @@ defmodule Example2.Activity.ActivityStore do
   def all(params) do
     limit = Map.get(params, "limit", nil)
 
-    (
-      from a in Activity,
+    from(a in Activity,
       limit: ^limit,
       order_by: [desc: a.occurred_at]
     )

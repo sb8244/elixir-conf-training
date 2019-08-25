@@ -11,6 +11,5 @@ defmodule Example2.Repo.Migrations.CreateActivities do
 
       timestamps()
     end
-
   end
 end
