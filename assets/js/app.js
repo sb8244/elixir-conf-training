@@ -1,5 +1,5 @@
 import css from "../css/app.css"
-import { getFeed, startFeed, fetchFeed, onNewActivity } from './feed'
+import { getFeed, startFeed, fetchFeed, onNewActivity, generateFakeActivityData, createActivity } from './feed'
 import { addActivityToTop } from "./dom"
 
 const feed = getFeed()
@@ -15,3 +15,8 @@ startFeed(feed).then(() => {
 })
 
 onNewActivity(feed, addActivityToTop)
+
+window.createFakeActivity = () => {
+  const data = generateFakeActivityData()
+  createActivity(feed, data).then(console.log).catch(console.error)
+}

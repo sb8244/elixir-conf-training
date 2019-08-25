@@ -26,8 +26,43 @@ export function fetchFeed({ channel }) {
   })
 }
 
+export function createActivity({ channel }, data) {
+  return new Promise((resolve, reject) => {
+    channel.push("create_activity", data)
+      .receive("ok", resolve)
+      .receive("error", reject)
+      .receive("timeout", reject)
+  })
+}
+
 export function onNewActivity({ channel }, callback) {
   channel.on('activity.created', (activity) => {
     callback(activity)
   })
+}
+
+export function generateFakeActivityData() {
+  const verb = randomVerb()
+  return {
+    customer_tier: randomValue(["A", "B", "C", "D"]),
+    what: [randomName(), verb, randomNoun()].join(" "),
+    what_type: verb,
+    who_id: Math.floor(Math.random() * 10000000)
+  }
+}
+
+function randomValue(arr) {
+  return arr[Math.floor(Math.random()*arr.length)]
+}
+
+function randomName() {
+  return randomValue(["Sarah", "Steve", "Ben", "Katie", "Erica", "Grant", "Jacob"])
+}
+
+function randomVerb() {
+  return randomValue(["edited", "viewed", "deleted"])
+}
+
+function randomNoun() {
+  return randomValue(["an email", "a person", "a company"])
 }
