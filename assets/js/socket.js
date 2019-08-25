@@ -1,6 +1,7 @@
 import {Socket} from "phoenix"
 
-let socket = new Socket("/feed_socket", { params: { token: window.userToken }})
+// TODO: Investigate Endpoint.ex to discover what the correct Socket path is.
+let socket = new Socket("/feed_socket")
 
 socket.connect()
 
