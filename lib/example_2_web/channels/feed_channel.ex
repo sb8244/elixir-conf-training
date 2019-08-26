@@ -5,12 +5,10 @@ defmodule Example2Web.FeedChannel do
   alias Example2Web.FeedTracker
 
   def join("feed:" <> req_id, %{"name" => name}, socket = %{assigns: %{user_id: req_id}}) do
-    send(self(), {:after_join, name})
     {:ok, socket}
   end
 
   def join("feed", %{"name" => name}, socket) do
-    send(self(), {:after_join, name})
     {:ok, socket}
   end
 
@@ -18,11 +16,10 @@ defmodule Example2Web.FeedChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
-  # TODO: Use the Tracker when a Channel is joined
-  def handle_info({:after_join, name}, socket) do
-    {:ok, _} = FeedTracker.track(socket, name)
-    {:noreply, socket}
-  end
+  # TODO(1): Use the Tracker when a Channel is joined
+  # TODO(2): Track the user's name
+  # def handle_info(:after_join, socket) do
+  # end
 
   def handle_in("fetch", params, socket) do
     payload = %{activities: all_activities(params)}
