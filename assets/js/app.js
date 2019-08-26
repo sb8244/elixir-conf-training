@@ -3,6 +3,8 @@ import { getFeed, startFeed, fetchFeed, onNewActivity, generateFakeActivityData,
 import { addActivityToTop } from "./dom"
 
 const feed = getFeed()
+const feed2 = getFeed()
+const feed3 = getFeed()
 
 startFeed(feed).then(() => {
   fetchFeed(feed).then(({ activities }) => {
@@ -13,6 +15,9 @@ startFeed(feed).then(() => {
 }).catch((err) => {
   console.error('startFeed error', err)
 })
+
+startFeed(feed2)
+startFeed(feed3)
 
 onNewActivity(feed, addActivityToTop)
 

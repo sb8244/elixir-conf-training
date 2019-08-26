@@ -1,19 +1,31 @@
-import socket from "./socket"
+import {Socket} from "phoenix"
 
 export function getFeed() {
-  const feedChannel = socket.channel("feed")
+  const name = randomName()
+  const fakeId = Math.floor(Math.random()*1000000)
+  const socket = new Socket("/feed_socket", { params: { user_id: fakeId } })
+  const feedChannel = socket.channel(`feed:${fakeId}`, { name })
+  const allChannel = socket.channel(`feed`, { name })
+
+  socket.connect()
+
+  console.log('Joining channels:', `feed and feed:${fakeId}`)
 
   return {
-    channel: feedChannel
+    channel: feedChannel,
+    allChannel,
+    socket
   }
 }
 
-export function startFeed({ channel }) {
+export function startFeed({ channel, allChannel }) {
   return new Promise((resolve, reject) => {
     channel.join()
       .receive("ok", resp => { resolve() })
       .receive("error", resp => { reject(resp) })
       .receive("timeout", resp => { reject(resp) })
+
+    allChannel.join()
   })
 }
 

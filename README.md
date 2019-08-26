@@ -9,61 +9,71 @@
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Section 2 - Part 2
+## Section 4 - Part 1
 
-In this section, you're going to see that Channels are just processes. You'll be extending the `FeedChannel`
-to have a rate limit of 1 request per second.
+You will be leveraging `Phoenix.Tracker` in this section. The usage of `Phoenix.Presence` is
+very similar to `Tracker`, so we'll be focusing on `Tracker`. It gives us easier access to
+inspect `handle_diff`, which you'll do below.
 
-### 1. Activate rate limiting
+### 1. Use the Tracker when a Channel is joined
 
-There is a function in `FeedChannel` called `rate_limit_socket/1`. It's going to modify the `socket` state in
-order to enable rate limiting. However, the function currently just returns the socket and rate limiting is
-not applied. Set the state of the Channel to include `rate_limited? = true`
+The Tracker is configured for you, but isn't being used. Make it so that the Channel uses `track`
+after a Channel is joined. Note that there are 2 different feeds. The first is a generic `feed`
+that all users see. The other is `feed:userId` which could be for a given user only.
 
-If you get stuck, investigate the Socket docs to learn the function to apply state to the `socket` struct.
-https://hexdocs.pm/phoenix/Phoenix.Socket.html
+### 2. Track the user's name
 
-You can test that this works by running `createFakeActivity()` twice from the JavaScript console. You should see an
-error that says "rate limit exceeded" if rate limiting is applied. If you wait 5s, you'll see that it is
-still applied.
+It would be really helpful to have the User's name when they join a feed. This information is
+passed into the Channel, but we don't have it stored in the Tracker. Make it so that the Tracker
+has the name. It should look something like this:
 
-### 2. Stop rate limiting
+```
+iex(1)> Phoenix.Tracker.list(Example2Web.FeedTracker, "feed")
+[
+  {"user:122963",
+   %{name: "Steve", online_at: 1566788438810, phx_ref: "6y6iRQk2Ges="}},
+  {"user:535839",
+   %{name: "Katie", online_at: 1566788438831, phx_ref: "O0Ftqm9Y9dM="}},
+  {"user:973528",
+   %{name: "Erica", online_at: 1566788438842, phx_ref: "D5FK5Wcpers="}}
+]
+```
 
-From the above test, you can see that rate limiting doesn't become unapplied. This makes sense because nothing
-in our code is clearing the state.
+### 3. Inspect the available data in `handle_diff`
 
-Like you would with a normal `GenServer`, send your `self()` a message after 5s that deactivates
-rate limiting, by setting `rate_limited? = false`.
+How does `handle_diff` return data currently?
 
-You can test that this works by running `createFakeActivity()` twice from the JavaScript console. You should see an
-error that says "rate limit exceeded" if rate limiting is applied. If you wait 5s, you'll see that the request works
-again.
+It's logged for your convenience, and you should see the logs when you join/leave a Channel. You can
+trigger a Channel leave by closing or refreshing the page.
 
-### 3. Observe multiple open tabs
+### 4. Create a local cluster to see distribution behavior
 
-No code changes for this section, but it's good to understand how `socket` state works.
+It's easy to get started with distributed Elixir. Locally, you can get running in a few steps:
 
-Open 2 tabs of http://localhost:4000. Run `createFakeActivity()` in 1 of the tabs, and then immediately run
-it from the other tab.
+```
+$ iex --name app@127.0.0.1 -S mix phx.server
+```
 
-* What happens?
-* Are you surprised at all by the result? Why did it happen this way?
-* What would you need to do to change this behavior (to do the opposite of what it actually does)?
+```
+$ iex --name back@127.0.0.1 -S mix
+iex(back@127.0.0.1)1> Node.connect(:"app@127.0.0.1")
+true
+```
 
-(spoilers below)
+Try to run commands from the "back" node to see what happens. Keep in mind that no WebSocket connection
+is attached to the "back" node, because it isn't exposing a phoenix server.
 
-### 4. (hard mode) Make the rate limiting apply across page reloads
+```
+$ Phoenix.Tracker.list(Example2Web.FeedTracker, "feed")
+# What do you see?
+```
 
-(spoilers for 3 below)
+Also keep an eye on how `handle_diff` is invoked on the backend node. What implications would this have
+if you were operating on handle_diff?
 
-Based on the results of the last observation, let's actually change the behavior to work across multiple
-tabs or page reloads. This is a more advanced task because you will need to add new modules and behavior to the
-system, rather than filling in a function or 2.
+### (hard mode) Switch out `Phoenix.Tracker` for `Phoenix.Presence`
 
-The goal of this task is to issue a frontend creation, refresh, and then issue another one. The second creation
-should be rate limited still, until 5s passes.
+We now want to have the list of joined feeds on the frontend. Swap out Tracker for Presence and let diff events go to the
+client. Verify that the diffs are being received by looking at the network tab and investigating the WebSocket data.
 
-### 5. (extra hard mode) Make the rate limiting apply to multiple users
-
-Try building the rate limiter for a single user first (like we have now), but then build in the idea of having
-multiple connected users with their own rate limits.
+Use the Presence class in the JavaScript client to keep track of the presence on the frontend.
