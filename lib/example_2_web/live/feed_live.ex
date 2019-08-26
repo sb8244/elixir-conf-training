@@ -7,15 +7,17 @@ defmodule Example2Web.FeedLive do
     ~L"""
     <button phx-click="create_random">Create Random Activity</button>
 
-    <%= for activity <- @activities do %>
-      <div class="activity-wrapper">
-        <span class="activity-wrapper__main"><%= activity.what %></span>
-        <span class="activity-wrapper__time"><%= DateTime.to_string(activity.occurred_at) %></span>
-        <span class="activity-wrapper__tier activity-wrapper__tier--<%= activity.customer_tier %>">
-          <%= activity.customer_tier %>
-        </span>
-      </div>
-    <% end %>
+    <div phx-update="prepend">
+      <%= for activity <- @activities do %>
+        <div class="activity-wrapper">
+          <span class="activity-wrapper__main"><%= activity.what %></span>
+          <span class="activity-wrapper__time"><%= DateTime.to_string(activity.occurred_at) %></span>
+          <span class="activity-wrapper__tier activity-wrapper__tier--<%= activity.customer_tier %>">
+            <%= activity.customer_tier %>
+          </span>
+        </div>
+      <% end %>
+    </div>
     """
   end
 
@@ -40,8 +42,7 @@ defmodule Example2Web.FeedLive do
 
   # We receive new activity.created events and handle them in the LiveView
   def handle_info(%Phoenix.Socket.Broadcast{event: "activity.created", payload: activity}, socket) do
-    new_activities = [activity | socket.assigns.activities]
-    socket = assign(socket, :activities, new_activities)
+    socket = update(socket, :activities, & [activity | &1])
     {:noreply, socket}
   end
 
