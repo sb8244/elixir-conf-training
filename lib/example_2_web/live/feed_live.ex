@@ -31,7 +31,6 @@ defmodule Example2Web.FeedLive do
     socket =
       socket
       |> assign(:user_id, user_id)
-      |> assign(:activities, initial_activities(connected?(socket)))
     {:ok, socket}
   end
 
@@ -48,12 +47,7 @@ defmodule Example2Web.FeedLive do
   end
 
   # TODO (2) Make it so that the initial page load only loads 3, but the Socket connection loads 25
-  defp initial_activities(false) do
+  defp initial_activities() do
     Activity.all(%{"limit" => 3})
-  end
-
-  defp initial_activities(true) do
-    Process.sleep(1000) # This is just to illustrate the difference in mount vs real-time
-    Activity.all(%{"limit" => 25})
   end
 end
