@@ -15,7 +15,7 @@ defmodule Example2.Activity.ActivityStore do
 
     from(a in Activity,
       limit: ^limit,
-      order_by: [desc: a.occurred_at]
+      order_by: [desc: a.occurred_at, desc: a.id]
     )
     |> Repo.all()
   end
