@@ -17,6 +17,7 @@ defmodule Example2Web.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/feed", FeedLive
   end
 
   # Other scopes may use custom stacks.

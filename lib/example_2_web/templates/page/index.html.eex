@@ -1,1 +1,3 @@
-<div id="activity-container" />
+<%= Phoenix.LiveView.live_render(@conn, Example2Web.FeedLive, session: %{user_id: @user_id}) %>
+
+<%# <div id="activity-container" /> %>

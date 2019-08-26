@@ -15,7 +15,8 @@ config :example_2, Example2Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "EiENYIqw2BeRJrHp1vpVoqeiezpLlDOgNFH1VNJAu+mC6gAWMssEnvcP44+mb294",
   render_errors: [view: Example2Web.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Example2.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Example2.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "GgDcwY1fw6yWrNvBCJOpeArmIL35EQWp"]
 
 # Configures Elixir's Logger
 config :logger, :console,

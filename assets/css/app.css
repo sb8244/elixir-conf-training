@@ -75,3 +75,7 @@ main {
 .activity-wrapper__tier--C {
   background-color: rgb(100, 100, 200);
 }
+
+button {
+  margin-top: 10px;
+}
