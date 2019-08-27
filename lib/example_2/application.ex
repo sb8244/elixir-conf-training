@@ -11,6 +11,7 @@ defmodule Example2.Application do
       Example2.Repo,
       Example2Web.Endpoint,
       {TelemetryMetricsStatsd,
+       port: 8126,
        metrics: []}
     ]
 
