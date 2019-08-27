@@ -85,6 +85,16 @@ Hint, it's marked as kubernetes-dns despite working with all DNS servers.
 ### (hard) Configure a pg2 group locally
 
 Knowing how to use pg2 manually is very useful. Try to configure a pg2 based process group which
-allows for identifying an instance of a process on a different node.
+allows for identifying an instance of a process on a different node. Here's a hint if you're stuck:
+
+```
+# in a new GenServer module
+
+def init(_) do
+  :ok = :pg2.create(topic)
+  :ok = :pg2.join(topic, self())
+  {:ok, %{}}
+end
+```
 
 When might this be useful?
