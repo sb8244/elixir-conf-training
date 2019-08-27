@@ -9,7 +9,7 @@ config :example_2, Example2.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :statsd_logger, port: 8125
+config :statsd_logger, port: 8126
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
