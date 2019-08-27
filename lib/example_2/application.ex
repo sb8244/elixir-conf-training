@@ -1,5 +1,6 @@
 defmodule Example2.Application do
   @moduledoc false
+  import Telemetry.Metrics
 
   use Application
 
@@ -9,7 +10,11 @@ defmodule Example2.Application do
     children = [
       Example2.Repo,
       Example2Web.Endpoint,
-      {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
+      {TelemetryMetricsStatsd,
+       metrics: [
+         counter([:example, :example_counter, :elixir_fans]),
+         sum("example.example_sum.elixir_fans"),
+       ]}
     ]
 
     opts = [strategy: :one_for_one, name: Example2.Supervisor]
@@ -31,17 +36,5 @@ defmodule Example2.Application do
         &ExampleMetricsHandler.handle_simple/4,
         %{some_config_key: :some_config_val}
       )
-  end
-
-  defp metrics do
-    import Telemetry.Metrics
-
-    [
-      counter("example.example_counter"),
-      distribution("example.example_distribution", buckets: [100, 200, 300]),
-      last_value("example.example_last_value"),
-      sum("example.example_sum"),
-      summary("example.example_summary")
-    ]
   end
 end
