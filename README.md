@@ -32,7 +32,7 @@ Try to do the following based on the telemetry documentation
 
 ### 2. Aggregating Metrics
 
-Familiarize yourself with the event being emitted by `Example2.Metrics.ExampleMetricsHandler.example_event`
+Familiarize yourself with the event being emitted by `Example2.Metrics.ExampleMetricsProducer.example_event()`
 
 Try to add the following stats to the statsd collector being started in `application.ex`. Checkout the docs for `Telemetry.Metrics`
 for how to do so:
