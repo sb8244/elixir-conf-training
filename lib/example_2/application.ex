@@ -4,7 +4,7 @@ defmodule Example2.Application do
   use Application
 
   def start(_type, _args) do
-    attach_metrics!
+    attach_metrics!()
 
     children = [
       Example2.Repo,
