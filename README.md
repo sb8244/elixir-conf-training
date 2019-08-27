@@ -9,61 +9,38 @@
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Section 2 - Part 2
+## Section 3 - Part 1
 
-In this section, you're going to see that Channels are just processes. You'll be extending the `FeedChannel`
-to have a rate limit of 1 request per second.
+In this section you will be exploring metrics collection via telemetry
 
-### 1. Activate rate limiting
+1.) A Simple Event
 
-There is a function in `FeedChannel` called `rate_limit_socket/1`. It's going to modify the `socket` state in
-order to enable rate limiting. However, the function currently just returns the socket and rate limiting is
-not applied. Set the state of the Channel to include `rate_limited? = true`
+(Telemetry Documentation)[https://github.com/beam-telemetry/telemetry]
 
-If you get stuck, investigate the Socket docs to learn the function to apply state to the `socket` struct.
-https://hexdocs.pm/phoenix/Phoenix.Socket.html
+open the console and produce and event using the following command
 
-You can test that this works by running `createFakeActivity()` twice from the JavaScript console. You should see an
-error that says "rate limit exceeded" if rate limiting is applied. If you wait 5s, you'll see that it is
-still applied.
+```
+Example2.Metrics.ExampleMetricsProducer.emit_simple
+```
 
-### 2. Stop rate limiting
+Checkout `Example2.Metrics.ExampleMetricsHandler` to see how that event is being handled
 
-From the above test, you can see that rate limiting doesn't become unapplied. This makes sense because nothing
-in our code is clearing the state.
+Try to do the following based on the telemetry documentation
+  * Add a new data key-val pair of the event `my_data: :foo`
+  * Add a new metadata entry to the event `my_metadata: :bar`
+  * Add the new config value `my_config: :baz` to the configuration of the `[:example, :simple]` handler
 
-Like you would with a normal `GenServer`, send your `self()` a message after 5s that deactivates
-rate limiting, by setting `rate_limited? = false`.
+2.) Aggregating Metrics
 
-You can test that this works by running `createFakeActivity()` twice from the JavaScript console. You should see an
-error that says "rate limit exceeded" if rate limiting is applied. If you wait 5s, you'll see that the request works
-again.
+Familarize yourself with the event being emited by `Example2.Metrics.ExampleMetricsHandler.example_event` 
 
-### 3. Observe multiple open tabs
+Checkout the docs for `Telemetry.Metrics`
 
-No code changes for this section, but it's good to understand how `socket` state works.
+Try to add the following stats to the statsd collector being started in `application.ex`
+  * The number of occurances of the `[:example, :foo]` event
+  * The sum of the values of `data_val_1` 
+  * The sum of the values of `data_val_2` partitioned by the value of `:metadata_key`
 
-Open 2 tabs of http://localhost:4000. Run `createFakeActivity()` in 1 of the tabs, and then immediately run
-it from the other tab.
+3.) (Hard Mode) Create a metric that polls your BEAM node for memory stats
 
-* What happens?
-* Are you surprised at all by the result? Why did it happen this way?
-* What would you need to do to change this behavior (to do the opposite of what it actually does)?
-
-(spoilers below)
-
-### 4. (hard mode) Make the rate limiting apply across page reloads
-
-(spoilers for 3 below)
-
-Based on the results of the last observation, let's actually change the behavior to work across multiple
-tabs or page reloads. This is a more advanced task because you will need to add new modules and behavior to the
-system, rather than filling in a function or 2.
-
-The goal of this task is to issue a frontend creation, refresh, and then issue another one. The second creation
-should be rate limited still, until 5s passes.
-
-### 5. (extra hard mode) Make the rate limiting apply to multiple users
-
-Try building the rate limiter for a single user first (like we have now), but then build in the idea of having
-multiple connected users with their own rate limits.
+4.) (Hard Mode) Put Metrics on all the Phoenix telemetry events

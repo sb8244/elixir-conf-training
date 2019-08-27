@@ -12,8 +12,9 @@ defmodule Example2.Application do
       Example2Web.Endpoint,
       {TelemetryMetricsStatsd,
        metrics: [
-         counter([:example, :example_counter, :elixir_fans]),
-         sum("example.example_sum.elixir_fans"),
+         sum([:example, :foo, :data_val_1]),
+         counter([:example, :foo, :data_val_1]),
+         sum([:example, :foo, :data_val_2], tags: [:metadata_key]),
        ]}
     ]
 
@@ -34,7 +35,7 @@ defmodule Example2.Application do
         "simple-event",
         [:example, :simple],
         &ExampleMetricsHandler.handle_simple/4,
-        %{some_config_key: :some_config_val}
+        %{my_config: :baz}
       )
   end
 end
