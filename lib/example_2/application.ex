@@ -10,7 +10,7 @@ defmodule Example2.Application do
       example: [
         strategy: Cluster.Strategy.Epmd,
         # TODO: Enter the right hosts here
-        config: [hosts: [:"app@127.0.0.1", :"backend@127.0.0.1"]],
+        config: [hosts: []],
       ]
     ]
 
