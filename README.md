@@ -11,16 +11,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Section 3 - Part 1
 
-In this section you will be exploring metrics collection via telemetry
+In this section you will be exploring metrics collection via telemetry.
 
-1.) A Simple Event
+### 1. A Simple Event
 
 (Telemetry Documentation)[https://github.com/beam-telemetry/telemetry]
 
-open the console and produce and event using the following command
+Open the console and produce an event using the following command
 
 ```
-Example2.Metrics.ExampleMetricsProducer.emit_simple
+Example2.Metrics.ExampleMetricsProducer.emit_simple()
 ```
 
 Checkout `Example2.Metrics.ExampleMetricsHandler` to see how that event is being handled
@@ -30,17 +30,23 @@ Try to do the following based on the telemetry documentation
   * Add a new metadata entry to the event `my_metadata: :bar`
   * Add the new config value `my_config: :baz` to the configuration of the `[:example, :simple]` handler
 
-2.) Aggregating Metrics
+### 2. Aggregating Metrics
 
-Familarize yourself with the event being emited by `Example2.Metrics.ExampleMetricsHandler.example_event` 
+Familiarize yourself with the event being emitted by `Example2.Metrics.ExampleMetricsHandler.example_event`
 
-Checkout the docs for `Telemetry.Metrics`
+Try to add the following stats to the statsd collector being started in `application.ex`. Checkout the docs for `Telemetry.Metrics`
+for how to do so:
 
-Try to add the following stats to the statsd collector being started in `application.ex`
-  * The number of occurances of the `[:example, :foo]` event
-  * The sum of the values of `data_val_1` 
+  * The number of occurrences of the `[:example, :foo]` event
+  * The sum of the values of `data_val_1`
   * The sum of the values of `data_val_2` partitioned by the value of `:metadata_key`
 
-3.) (Hard Mode) Create a metric that polls your BEAM node for memory stats
+### 3. (Hard Mode) Create a metric that polls your BEAM node for memory stats
 
-4.) (Hard Mode) Put Metrics on all the Phoenix telemetry events
+Keeping track of BEAM stats is very important for production deployments. Create a special type of telemetry dispatcher
+that chirps memory stats every second or so.
+
+### 4. (Hard Mode) Put Metrics on all the Phoenix telemetry events
+
+Find the telemetry events that Phoenix allows (you can do this without using the internet!), and then add metrics for
+each.
