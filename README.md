@@ -1,26 +1,16 @@
-# Section 2 Example
+# Real-Time Systems Training
 
-There are 2 different parts in this example. Each part has its own set of branches to walk you through the
-changes necessary to implement a Phoenix Channels server and client.
+Authors: Grant Powell & Stephen Bussey
 
-## Part 1
+## Slides
 
-Checkout `part1-start` in order to get started with this example. Do not look at the commit log or you will
-give away the exercise to yourself (and you wouldn't want to do that, would you?)
+Can be found in slides.pdf
 
-There are instructions to follow for both the main class flow, but then with an additional hard mode.
+## Sections
 
-The answers can be found in `part1-complete`. If you are struggling at all, raise your hand rather than
-directly looking ahead. The hard mode solution can be found in `part1-complete-hard`, due to the amount of
-changes necessary to implement.
+Each section is broken down in 2 parts. The examples all start on a branch with the pattern
+`sectionN-partM-start` and end on a branch with the pattern `sectionN-partM-complete`. If the
+section has a hard mode, then it *may* be found on `sectionN-partM-complete-hard`.
 
-## Part 2
-
-Checkout `part2-start` in order to get started with this example. Do not look at the commit log or you will
-give away the exercise to yourself (and you wouldn't want to do that, would you?)
-
-There are instructions to follow for both the main class flow, but then with an additional hard mode.
-
-The answers can be found in `part2-complete`. If you are struggling at all, raise your hand rather than
-directly looking ahead. The hard mode solution can be found in `part2-complete-hard`, due to the amount of
-changes necessary to implement.
+The slides may tell you an incorrect branch or repo to use. All of the code is found in this
+single repo now.
