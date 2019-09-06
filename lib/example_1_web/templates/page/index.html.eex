@@ -1,0 +1,15 @@
+<div class="page sick-colors white-text centered-text cool-font">
+  <div class="intro-page-grid">
+    <h1 class="main-title">Section 1 Examples</h1>
+
+    <div class="flex-center" style="flex-wrap: wrap;">
+      <a href="/part1" class="example-portal flex-center flex-column">
+          <h1 class="main-title">Part 1</h1>
+      </a>
+
+      <a href="/part2" class="example-portal flex-center flex-column">
+          <h1 class="main-title">Part 2</h1>
+      </a>
+    </div>
+  </div>
+</div>

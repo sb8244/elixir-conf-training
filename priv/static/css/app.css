@@ -1,0 +1,73 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.sick-colors {
+  background: linear-gradient(to left, #493240, #FF0099);
+}
+
+.cool-font {
+  font-family: 'Sigmar One', cursive;
+}
+
+.flex-center {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.three-d-shadow {
+  box-shadow: 0px 8px 10px gray,-10px 8px 15px gray, 10px 8px 15px gray;
+}
+
+.guage {
+  display: grid;
+  grid-template-rows: 30% 70%;
+}
+
+.guage .title {
+  padding: 10px;
+  background-color: green;
+}
+
+.guage .content {
+  font-size: 50px;
+}
+
+.intro-page-grid {
+  display: grid;
+  grid-template-rows: 30% 1fr;
+}
+
+.example-portal {
+  width: 30%;
+  height: 400px;
+  text-decoration: none;
+  background: linear-gradient(to bottom, #2C5364, #203A43, #0F2027);
+  border-radius: 50px;
+}
+
+.flex-column {
+  flex-flow: column nowrap;
+}
+
+.white-text {
+  color: white;
+}
+
+.main-title {
+  font-size: 5em;
+  color: white;
+}
+
+.centered-text {
+  text-align: center;
+}
+
